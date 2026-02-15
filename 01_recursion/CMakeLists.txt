@@ -52,10 +52,40 @@ target_link_libraries(fibonacci_test fibonacci_lib GTest::gtest_main)
 
 # Plotter executable
 add_executable(fibonacci_plotter
+        simple_fibonacci/main_fibonacci_plotter.cpp
         simple_fibonacci/fibonacci_plotter.cpp
+        simple_fibonacci/fibonacci_plotter.h
         ${BUTTERFLIES_SOURCES_C}
 )
 target_link_libraries(fibonacci_plotter fibonacci_lib glfw)
 
+# Tower of Hanoi executable
+add_executable(tower_of_hanoi tower_of_hanoi/main.cpp)
+
+# Mandelbrot library
+add_library(mandelbrot_lib
+        mandelbrot/mandelbrot.cpp
+        mandelbrot/mandelbrot.h
+)
+
+# Mandelbrot executable
+add_executable(mandelbrot mandelbrot/main.cpp)
+target_link_libraries(mandelbrot mandelbrot_lib)
+
+# Mandelbrot test executable
+add_executable(mandelbrot_test mandelbrot/mandelbrot_test.cpp)
+target_link_libraries(mandelbrot_test mandelbrot_lib GTest::gtest_main)
+
+
 include(GoogleTest)
 gtest_discover_tests(fibonacci_test)
+gtest_discover_tests(mandelbrot_test)
+
+# Mandelbrot visualizer executable
+add_executable(mandelbrot_viz
+    mandelbrot/main_viz.cpp
+        mandelbrot/mandelbrot_visualizer.cpp
+        mandelbrot/mandelbrot_visualizer.h
+    ${BUTTERFLIES_SOURCES_C}
+)
+target_link_libraries(mandelbrot_viz mandelbrot_lib glfw)
